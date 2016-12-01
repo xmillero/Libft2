@@ -6,45 +6,57 @@
 /*   By: xmillero <xmillero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 10:20:19 by xmillero          #+#    #+#             */
-/*   Updated: 2016/11/30 15:20:11 by xmillero         ###   ########.fr       */
+/*   Updated: 2016/11/30 16:40:26 by xmillero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_itoa(int n)
+static int	ft_len_nb(int n)
 {
-	int		i;
-	long	n1;
-	char	*str;
-	int		neg;
+	int		len;
+	long	l_nb;
 
-	i = 1;
-	neg = (n <0);
-	n1 = n;
-	if (n1 <0)
-		n1 *= -1;
-	while (n1 >= 10)
+	l_nb = n;
+	len = 0;
+	if (n < 0)
 	{
-		i++;
-		n1 = n1 / 10;
+		l_nb = -n;
+		len++;
 	}
-	i += neg;
-	str = (char *)malloc(sizeof(char) * (i + 1));
-	if (str == NULL)
-		return (NULL);
-	str[i] = '\0';
-	i--;
-	n1 = n;
-	if (n1 < 0)
-		n1 *= -1;
-	while (i >= neg)
+	while (l_nb != l_nb % 10)
 	{
-		str[i] = n1 % 10 + '0';
-		n1 = n1 / 10;
-		i--;
+		len++;
+		l_nb = (l_nb - l_nb % 10) / 10;
 	}
-	if (neg)
+	len++;
+	return (len);
+}
+
+char		*ft_itoa(int n)
+{
+	char	*str;
+	int		len;
+	int		i;
+	long	l_nb;
+
+	i = 0;
+	l_nb = n;
+	len = ft_len_nb(n);
+	str = ft_memalloc(sizeof(*str) * (len + 1));
+	if (!str)
+		return (str);
+	if (n < 0)
+	{
 		str[0] = '-';
+		l_nb *= -1;
+	}
+	while (i < (n < 0 ? len - 1 : len))
+	{
+		str[len - i - 1] = (l_nb % 10) + 48;
+		l_nb = (l_nb - l_nb % 10) / 10;
+		i++;
+	}
+	str[len] = '\0';
 	return (str);
-}	
+}
