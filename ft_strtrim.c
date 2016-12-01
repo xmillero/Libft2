@@ -6,7 +6,7 @@
 /*   By: xmillero <xmillero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 09:28:41 by xmillero          #+#    #+#             */
-/*   Updated: 2016/11/28 13:48:05 by xmillero         ###   ########.fr       */
+/*   Updated: 2016/12/01 18:04:53 by xmillero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*ft_strtrim(char const *s)
 	int				i;
 
 	i = 0;
+	len = 0;
 	if (s == NULL)
 		return (NULL);
 	l = ft_strlen(s);
@@ -33,10 +34,7 @@ char	*ft_strtrim(char const *s)
 		while ((s[l] == ' ' || s[l] == '\n' || s[l] == '\t') && l > 0)
 			l--;
 		len = l - i + 1;
-		s1 = (char *)malloc(sizeof(char) * len + 1);
-		s1 = ft_strsub(s, start, len);
-		return (s1);
 	}
-	s1 = (char *)malloc(sizeof(char));
+	s1 = ft_strsub(s, start, len);
 	return (s1);
 }
